@@ -22,7 +22,19 @@ public class ManagerService {
   @Autowired
   CollaborateurRepository collaborateurRepository;
 
-  public void valider() {}
+  public void valider(Integer codeTache,String codeCollab) {
+    TacheRealiseePK pk = new TacheRealiseePK();
+    pk.setCodeTache(codeTache);
+    pk.setCodeCollab(codeCollab);
+
+    Optional<TacheRealisee> tacheRea = tacheRealiseeRepository.findById(pk);
+    if(tacheRea.isPresent() && tacheRea.get().getStatus().equals("done")){
+      TacheRealisee t = tacheRea.get();
+      t.setStatus("validated");
+      tacheRealiseeRepository.save(t);
+    }
+
+  }
 
   public void affecterTache() {}
 
@@ -41,17 +53,17 @@ public class ManagerService {
     if (collab.isPresent() && t.isPresent()) {
       //Collaborateur et Tache existent dejà
 
-      TacheRealisee colT = new TacheRealisee();
+      TacheRealisee tacheRea = new TacheRealisee();
       TacheRealiseePK pk = new TacheRealiseePK();
 
       pk.setCodeTache(t.get().getCodeTache());
       pk.setCodeCollab(collab.get().getCodeCollab());
 
-      colT.setTacheRealiseePK(pk);
-      colT.setStatus(status);
-      colT.setChargeHoraireRealisee(Integer.parseInt(chargeHoraireRealisee));
+      tacheRea.setTacheRealiseePK(pk);
+      tacheRea.setStatus(status);
+      tacheRea.setChargeHoraireRealisee(Integer.parseInt(chargeHoraireRealisee));
 
-      return tacheRealiseeRepository.save(colT);
+      return tacheRealiseeRepository.save(tacheRea);
     } else {
       return null;
     }
