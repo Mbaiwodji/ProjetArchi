@@ -1,17 +1,20 @@
 package com.example.demo.model;
 
-
-import java.util.*;
 import jakarta.persistence.*;
+import java.util.*;
 import lombok.Data;
-@Entity
-public class Projet {
-	@Id
-	private int codeProjet;
-	private String intituleProjet;
-	private int chargeHoraireProjet;
-	
-	@OneToMany(mappedBy="projet")
-	private List<Tache> tachess=new ArrayList<Tache>(); 
 
+@Entity
+@Data
+public class Projet {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int codeProjet;
+
+  private String intituleProjet;
+  private int chargeHoraireProjet;
+
+  @OneToMany(mappedBy = "projet")
+  private List<Tache> taches = new ArrayList<Tache>();
 }

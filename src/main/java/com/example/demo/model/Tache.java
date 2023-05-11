@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class Tache {
 	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int codeTache;
 	private String intituleTache;
 	private int chargeHoraireTache;
